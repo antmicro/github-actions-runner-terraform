@@ -3,13 +3,13 @@ locals {
 }
 
 resource "google_compute_network" "gha-network" {
-  name = var.gcp_subnet
-  project = var.gcp_project
+  name                    = var.gcp_subnet
+  project                 = var.gcp_project
   auto_create_subnetworks = false
 }
 
 resource "google_compute_subnetwork" "gha-subnet" {
-  name = var.gcp_subnet
+  name    = var.gcp_subnet
   network = google_compute_network.gha-network.id
-  region = local.zone_no_sub
+  region  = local.zone_no_sub
 }

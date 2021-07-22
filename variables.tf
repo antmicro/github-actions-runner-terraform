@@ -11,7 +11,7 @@ variable "gcp_worker" {
 }
 
 variable "gcp_zone" {
-  type = string
+  type    = string
   default = "us-west1-a"
 }
 
@@ -32,11 +32,11 @@ variable "gcp_service_account" {
 }
 
 variable "gcp_disk_type" {
-  type = string
+  type    = string
   default = "pd-ssd"
 }
 
 variable "gcp_disk_size" {
-  type = number
+  type    = number
   default = 30
 }
