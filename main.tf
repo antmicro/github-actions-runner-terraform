@@ -92,3 +92,9 @@ resource "google_compute_router_nat" "gha-nat" {
   min_ports_per_vm                   = 512
   project                            = var.gcp_project
 }
+
+resource "google_service_account" "gha-coordinator-sa" {
+  account_id   = var.gcp_service_account
+  display_name = "SA for GHA Runner"
+  project      = var.gcp_project
+}
