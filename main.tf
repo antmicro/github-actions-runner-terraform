@@ -19,7 +19,7 @@ resource "google_compute_subnetwork" "gha-subnet" {
 }
 
 resource "google_compute_firewall" "gha-firewall-allow-unbound" {
-  name        = "${var.gcp_subnet}--coordinator-dns"
+  name        = "${var.gcp_subnet}---coordinator-dns"
   network     = google_compute_network.gha-network.id
   direction   = "INGRESS"
   priority    = 999
@@ -63,7 +63,7 @@ resource "google_compute_firewall" "gha-firewall-allow-c-to-r" {
 }
 
 resource "google_compute_firewall" "gha-firewall-allow-incoming-ssh" {
-  name          = "${var.gcp_subnet}---access-runners"
+  name          = "${var.gcp_subnet}---ssh-from-outside"
   network       = google_compute_network.gha-network.id
   direction     = "INGRESS"
   priority      = 1001
