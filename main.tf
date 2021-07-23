@@ -98,3 +98,42 @@ resource "google_service_account" "gha-coordinator-sa" {
   display_name = "SA for GHA Runner"
   project      = var.gcp_project
 }
+
+resource "google_compute_disk" "gha-coordinator-bootdisk" {
+  name    = "${var.gcp_coordinator_name}---boot-disk"
+  size    = 10
+  zone    = var.gcp_zone
+  image   = "projects/debian-cloud/global/images/debian-10-buster-v20210512"
+  project = var.gcp_project
+}
+
+resource "google_compute_instance" "gha-coordinator" {
+  name         = var.gcp_coordinator_name
+  zone         = var.gcp_zone
+  machine_type = "n2-standard-4"
+
+  labels = {
+    isantmicrorunner = 1
+  }
+
+  tags = ["coordinator"]
+
+  boot_disk {
+    auto_delete = true
+    source      = google_compute_disk.gha-coordinator-bootdisk.name
+  }
+
+  network_interface {
+    network    = google_compute_network.gha-network.id
+    subnetwork = google_compute_subnetwork.gha-subnet.id
+
+    access_config {}
+  }
+
+  service_account {
+    email = google_service_account.gha-coordinator-sa.email
+    scopes = ["https://www.googleapis.com/auth/compute"]
+  }
+
+  project = var.gcp_project
+}
