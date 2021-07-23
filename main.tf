@@ -47,3 +47,48 @@ resource "google_compute_firewall" "gha-firewall-drop-incoming-r-to-c" {
     protocol = "all"
   }
 }
+
+resource "google_compute_firewall" "gha-firewall-allow-c-to-r" {
+  name        = "${var.gcp_subnet}---access-runners"
+  network     = google_compute_network.gha-network.id
+  direction   = "INGRESS"
+  priority    = 1000
+  target_tags = [local.r_tag]
+  source_tags = [local.c_tag]
+  project     = var.gcp_project
+
+  allow {
+    protocol = "all"
+  }
+}
+
+resource "google_compute_firewall" "gha-firewall-allow-incoming-ssh" {
+  name          = "${var.gcp_subnet}---access-runners"
+  network       = google_compute_network.gha-network.id
+  direction     = "INGRESS"
+  priority      = 1001
+  target_tags   = [local.c_tag]
+  source_ranges = ["0.0.0.0/0"]
+  project       = var.gcp_project
+
+  allow {
+    protocol = "all"
+  }
+}
+
+resource "google_compute_router" "gha-router" {
+  name    = "${var.gcp_subnet}---cloud-router"
+  network = google_compute_network.gha-network.id
+  region  = local.zone_no_sub
+  project = var.gcp_project
+}
+
+resource "google_compute_router_nat" "gha-nat" {
+  name                               = "${var.gcp_subnet}---gateway"
+  router                             = google_compute_router.gha-router.name
+  region                             = local.zone_no_sub
+  nat_ip_allocate_option             = "AUTO_ONLY"
+  source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
+  min_ports_per_vm                   = 512
+  project                            = var.gcp_project
+}
