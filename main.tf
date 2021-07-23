@@ -32,3 +32,18 @@ resource "google_compute_firewall" "gha-firewall-allow-unbound" {
     ports    = [53]
   }
 }
+
+resource "google_compute_firewall" "gha-firewall-drop-incoming-r-to-c" {
+  name        = "${var.gcp_subnet}---deny-access-coordinator"
+  network     = google_compute_network.gha-network.id
+  direction   = "INGRESS"
+  priority    = 1000
+  target_tags = [local.c_tag]
+  source_tags = [local.r_tag]
+  project     = var.gcp_project
+
+  # TODO: This might be erroneous, take a look at it later.
+  allow {
+    protocol = "all"
+  }
+}
