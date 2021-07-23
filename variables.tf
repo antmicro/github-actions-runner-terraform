@@ -6,6 +6,10 @@ variable "gha_repository" {
   type = string
 }
 
+variable "gcp_coordinator_name" {
+  type = string
+}
+
 variable "gcp_worker" {
   type = string
 }
