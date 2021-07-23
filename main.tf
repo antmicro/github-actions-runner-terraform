@@ -99,6 +99,12 @@ resource "google_service_account" "gha-coordinator-sa" {
   project      = var.gcp_project
 }
 
+resource "google_project_iam_member" "gha-coordinator-sa-role" {
+  role    = "roles/compute.admin"
+  member  = "serviceAccount:${google_service_account.gha-coordinator-sa.email}"
+  project = var.gcp_project
+}
+
 resource "google_compute_disk" "gha-coordinator-bootdisk" {
   name    = "${var.gcp_coordinator_name}---boot-disk"
   size    = 10
@@ -131,7 +137,7 @@ resource "google_compute_instance" "gha-coordinator" {
   }
 
   service_account {
-    email = google_service_account.gha-coordinator-sa.email
+    email  = google_service_account.gha-coordinator-sa.email
     scopes = ["https://www.googleapis.com/auth/compute"]
   }
 
