@@ -1,3 +1,20 @@
+# Terraform module for GitHub Actions custom runner
+
+Copyright (c) 2020-2021 [Antmicro](https://www.antmicro.com)
+
+The aim of this project is to simplify the deployment of
+[Antmicro's GitHub Actions runner](https://github.com/antmicro/runner).
+and to describe the virtual resources according to IaC principles.
+
+## Usage
+
+In order to deploy the infrastructure,
+make sure that the service account has the following roles assigned:
+
+* **Compute Admin** for creating and managing resources within the Compute Engine.
+* **Service Account Creator** for managing the service account linked with the coordinator instance.
+* **Service Account User** for assigning the aforementioned service account to the coordinator instance.
+
 ## Requirements
 
 | Name | Version |

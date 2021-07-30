@@ -1,3 +1,24 @@
+/**
+ * # Terraform module for GitHub Actions custom runner
+ *
+ * Copyright (c) 2020-2021 [Antmicro](https://www.antmicro.com)
+ *
+ * The aim of this project is to simplify the deployment of 
+ * [Antmicro's GitHub Actions runner](https://github.com/antmicro/runner).
+ * and to describe the virtual resources according to IaC principles.
+ * 
+ * ## Usage
+ *
+ * In order to deploy the infrastructure, 
+ * make sure that the service account has the following roles assigned:
+ * 
+ * * **Compute Admin** for creating and managing resources within the Compute Engine.
+ * * **Service Account Creator** for managing the service account linked with the coordinator instance.
+ * * **Service Account User** for assigning the aforementioned service account to the coordinator instance.
+ *
+ *
+ */
+
 locals {
   zone_no_sub = strrev(substr(strrev(var.gcp_zone), 2, -1))
   c_tag       = "coordinator"
@@ -85,7 +106,7 @@ resource "google_compute_router" "gha-router" {
 
 resource "google_compute_router_nat" "gha-nat" {
   name                               = "${var.gcp_subnet}---gateway"
-  router                             = google_compute_router.gha-router.name
+  route                              = google_compute_router.gha-router.name
   region                             = local.zone_no_sub
   nat_ip_allocate_option             = "AUTO_ONLY"
   source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
