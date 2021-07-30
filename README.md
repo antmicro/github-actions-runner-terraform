@@ -37,11 +37,11 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_gcp_coordinator_name"></a> [gcp\_coordinator\_name](#input\_gcp\_coordinator\_name) | n/a | `string` | n/a | yes |
-| <a name="input_gcp_project"></a> [gcp\_project](#input\_gcp\_project) | n/a | `string` | n/a | yes |
-| <a name="input_gcp_service_account"></a> [gcp\_service\_account](#input\_gcp\_service\_account) | n/a | `string` | n/a | yes |
-| <a name="input_gcp_subnet"></a> [gcp\_subnet](#input\_gcp\_subnet) | n/a | `string` | n/a | yes |
-| <a name="input_gcp_zone"></a> [gcp\_zone](#input\_gcp\_zone) | n/a | `string` | `"us-west1-a"` | no |
+| <a name="input_gcp_coordinator_name"></a> [gcp\_coordinator\_name](#input\_gcp\_coordinator\_name) | Runner coordinator instance name | `string` | `"gha-runner-coordinator"` | no |
+| <a name="input_gcp_project"></a> [gcp\_project](#input\_gcp\_project) | Project name | `string` | n/a | yes |
+| <a name="input_gcp_service_account"></a> [gcp\_service\_account](#input\_gcp\_service\_account) | Name component of the service account for coordinator | `string` | `"gha-runner-coordinator-sa"` | no |
+| <a name="input_gcp_subnet"></a> [gcp\_subnet](#input\_gcp\_subnet) | Name for VPC network and subnetwork | `string` | `"gha-runner-net"` | no |
+| <a name="input_gcp_zone"></a> [gcp\_zone](#input\_gcp\_zone) | Zone where the coordinator instance, VPC resources and workers will be created | `string` | `"us-west1-a"` | no |
 
 ## Outputs
 
