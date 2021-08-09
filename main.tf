@@ -106,7 +106,7 @@ resource "google_compute_router" "gha-router" {
 
 resource "google_compute_router_nat" "gha-nat" {
   name                               = "${var.gcp_subnet}---gateway"
-  route                              = google_compute_router.gha-router.name
+  router                             = google_compute_router.gha-router.name
   region                             = local.zone_no_sub
   nat_ip_allocate_option             = "AUTO_ONLY"
   source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
