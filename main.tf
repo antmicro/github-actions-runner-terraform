@@ -40,7 +40,7 @@ resource "google_compute_subnetwork" "gha-subnet" {
 }
 
 resource "google_compute_firewall" "gha-firewall-allow-unbound" {
-  name        = "${var.gcp_subnet}---coordinator-dns"
+  name        = "${var.gcp_subnet}---allow-coordinator-services"
   network     = google_compute_network.gha-network.id
   direction   = "INGRESS"
   priority    = 999
@@ -51,6 +51,10 @@ resource "google_compute_firewall" "gha-firewall-allow-unbound" {
   allow {
     protocol = "udp"
     ports    = [53]
+  }
+  allow {
+    protocol = "tcp"
+    ports    = [5000]
   }
 }
 
