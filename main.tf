@@ -50,7 +50,7 @@ resource "google_compute_firewall" "gha-firewall-allow-unbound" {
 
   allow {
     protocol = "udp"
-    ports    = [53]
+    ports    = [53, 5140]
   }
   allow {
     protocol = "tcp"
