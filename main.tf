@@ -35,7 +35,7 @@ resource "google_compute_subnetwork" "gha-subnet" {
   name          = var.gcp_subnet
   network       = google_compute_network.gha-network.id
   region        = local.zone_no_sub
-  ip_cidr_range = "10.0.0.0/24"
+  ip_cidr_range = "10.0.0.0/16"
   project       = var.gcp_project
 }
 
