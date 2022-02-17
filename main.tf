@@ -20,9 +20,10 @@
  */
 
 locals {
-  zone_no_sub = strrev(substr(strrev(var.gcp_zone), 2, -1))
-  c_tag       = "coordinator"
-  r_tag       = "runners"
+  zone_no_sub    = strrev(substr(strrev(var.gcp_zone), 2, -1))
+  log_disk_count = var.gcp_coordinator_log_disk_present == true ? 1 : 0
+  c_tag          = "coordinator"
+  r_tag          = "runners"
 }
 
 resource "google_compute_network" "gha-network" {
@@ -138,6 +139,21 @@ resource "google_compute_disk" "gha-coordinator-bootdisk" {
   project = var.gcp_project
 }
 
+resource "google_compute_disk" "gha-coordinator-logdisk" {
+  name    = "${var.gcp_coordinator_name}--logs"
+  size    = var.gcp_coordinator_log_disk_size
+  zone    = var.gcp_zone
+  project = var.gcp_project
+  count   = local.log_disk_count
+}
+
+resource "google_compute_attached_disk" "gha-coordinator-logdisk-attached" {
+  device_name = "gharunnerlogs"
+  disk        = google_compute_disk.gha-coordinator-logdisk[count.index].id
+  instance    = google_compute_instance.gha-coordinator.id
+  count       = local.log_disk_count
+}
+
 resource "google_compute_instance" "gha-coordinator" {
   name         = var.gcp_coordinator_name
   zone         = var.gcp_zone
@@ -164,6 +180,10 @@ resource "google_compute_instance" "gha-coordinator" {
   service_account {
     email  = google_service_account.gha-coordinator-sa.email
     scopes = ["https://www.googleapis.com/auth/compute"]
+  }
+
+  lifecycle {
+    ignore_changes = [attached_disk]
   }
 
   project = var.gcp_project

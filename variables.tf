@@ -10,6 +10,18 @@ variable "gcp_coordinator_disk_size" {
   default     = 10
 }
 
+variable "gcp_coordinator_log_disk_present" {
+  type        = bool
+  description = "Specify if a sepearate disk for logs should be created and managed"
+  default     = false
+}
+
+variable "gcp_coordinator_log_disk_size" {
+  type        = number
+  description = "Runner coordinator log disk size in gigabytes"
+  default     = 10
+}
+
 variable "gcp_zone" {
   type        = string
   description = "Zone where the coordinator instance, VPC resources and workers will be created"
