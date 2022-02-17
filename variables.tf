@@ -4,6 +4,12 @@ variable "gcp_coordinator_name" {
   default     = "gha-runner-coordinator"
 }
 
+variable "gcp_coordinator_disk_size" {
+  type        = number
+  description = "Runner coordinator boot disk size in gigabytes"
+  default     = 10
+}
+
 variable "gcp_zone" {
   type        = string
   description = "Zone where the coordinator instance, VPC resources and workers will be created"

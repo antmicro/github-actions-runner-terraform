@@ -132,7 +132,7 @@ resource "google_project_iam_member" "gha-coordinator-sa-role" {
 
 resource "google_compute_disk" "gha-coordinator-bootdisk" {
   name    = "${var.gcp_coordinator_name}---boot-disk"
-  size    = 10
+  size    = var.gcp_coordinator_disk_size
   zone    = var.gcp_zone
   image   = "projects/debian-cloud/global/images/debian-10-buster-v20210512"
   project = var.gcp_project

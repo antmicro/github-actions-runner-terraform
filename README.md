@@ -54,6 +54,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_gcp_coordinator_disk_size"></a> [gcp\_coordinator\_disk\_size](#input\_gcp\_coordinator\_disk\_size) | Runner coordinator boot disk size in gigabytes | `number` | `10` | no |
 | <a name="input_gcp_coordinator_name"></a> [gcp\_coordinator\_name](#input\_gcp\_coordinator\_name) | Runner coordinator instance name | `string` | `"gha-runner-coordinator"` | no |
 | <a name="input_gcp_project"></a> [gcp\_project](#input\_gcp\_project) | Project name | `string` | n/a | yes |
 | <a name="input_gcp_service_account"></a> [gcp\_service\_account](#input\_gcp\_service\_account) | Name component of the service account for coordinator | `string` | `"gha-runner-coordinator-sa"` | no |
