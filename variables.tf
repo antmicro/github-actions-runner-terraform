@@ -16,6 +16,12 @@ variable "gcp_coordinator_disk_size" {
   default     = 10
 }
 
+variable "gcp_coordinator_disk_name_suffix" {
+  type        = string
+  description = "String to append after instance name (useful for managing legacy deployments)"
+  default     = "---boot-disk"
+}
+
 variable "gcp_coordinator_log_disk_present" {
   type        = bool
   description = "Specify if a sepearate disk for logs should be created and managed"

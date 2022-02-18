@@ -132,7 +132,7 @@ resource "google_project_iam_member" "gha-coordinator-sa-role" {
 }
 
 resource "google_compute_disk" "gha-coordinator-bootdisk" {
-  name    = "${var.gcp_coordinator_name}---boot-disk"
+  name    = format("%s%s", var.gcp_coordinator_name, var.gcp_coordinator_disk_name_suffix)
   size    = var.gcp_coordinator_disk_size
   zone    = var.gcp_zone
   image   = "projects/debian-cloud/global/images/debian-10-buster-v20210512"
@@ -157,7 +157,7 @@ resource "google_compute_attached_disk" "gha-coordinator-logdisk-attached" {
 resource "google_compute_instance" "gha-coordinator" {
   name         = var.gcp_coordinator_name
   zone         = var.gcp_zone
-  machine_type = var.gcp_coordinator_machine_type 
+  machine_type = var.gcp_coordinator_machine_type
 
   labels = {
     isantmicrorunner = 1

@@ -56,6 +56,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_gcp_coordinator_disk_name_suffix"></a> [gcp\_coordinator\_disk\_name\_suffix](#input\_gcp\_coordinator\_disk\_name\_suffix) | String to append after instance name (useful for managing legacy deployments) | `string` | `"---boot-disk"` | no |
 | <a name="input_gcp_coordinator_disk_size"></a> [gcp\_coordinator\_disk\_size](#input\_gcp\_coordinator\_disk\_size) | Runner coordinator boot disk size in gigabytes | `number` | `10` | no |
 | <a name="input_gcp_coordinator_log_disk_present"></a> [gcp\_coordinator\_log\_disk\_present](#input\_gcp\_coordinator\_log\_disk\_present) | Specify if a sepearate disk for logs should be created and managed | `bool` | `false` | no |
 | <a name="input_gcp_coordinator_log_disk_size"></a> [gcp\_coordinator\_log\_disk\_size](#input\_gcp\_coordinator\_log\_disk\_size) | Runner coordinator log disk size in gigabytes | `number` | `10` | no |
