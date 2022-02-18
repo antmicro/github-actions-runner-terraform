@@ -157,7 +157,7 @@ resource "google_compute_attached_disk" "gha-coordinator-logdisk-attached" {
 resource "google_compute_instance" "gha-coordinator" {
   name         = var.gcp_coordinator_name
   zone         = var.gcp_zone
-  machine_type = "n2-standard-4"
+  machine_type = var.gcp_coordinator_machine_type 
 
   labels = {
     isantmicrorunner = 1

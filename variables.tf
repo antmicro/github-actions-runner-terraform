@@ -4,6 +4,12 @@ variable "gcp_coordinator_name" {
   default     = "gha-runner-coordinator"
 }
 
+variable "gcp_coordinator_machine_type" {
+  type        = string
+  description = "Runner coordinator machine type"
+  default     = "n2-standard-4"
+}
+
 variable "gcp_coordinator_disk_size" {
   type        = number
   description = "Runner coordinator boot disk size in gigabytes"
