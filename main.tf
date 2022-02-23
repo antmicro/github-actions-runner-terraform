@@ -184,7 +184,10 @@ resource "google_compute_instance" "gha-coordinator" {
   }
 
   lifecycle {
-    ignore_changes = [attached_disk]
+    ignore_changes = [
+      attached_disk,
+      metadata["ssh-keys"]
+    ]
   }
 
   project = var.gcp_project
