@@ -22,6 +22,13 @@ variable "gcp_coordinator_disk_type" {
   default     = "pd-standard"
 }
 
+variable "gcp_coordinator_disk_name_prefix" {
+  type        = string
+  description = "Defaults to instance name if not specified."
+  default     = null
+  nullable    = true
+}
+
 variable "gcp_coordinator_disk_name_suffix" {
   type        = string
   description = "String to append after instance name (useful for managing legacy deployments)"

@@ -56,6 +56,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_gcp_coordinator_disk_name_prefix"></a> [gcp\_coordinator\_disk\_name\_prefix](#input\_gcp\_coordinator\_disk\_name\_prefix) | Defaults to instance name if not specified. | `string` | `null` | no |
 | <a name="input_gcp_coordinator_disk_name_suffix"></a> [gcp\_coordinator\_disk\_name\_suffix](#input\_gcp\_coordinator\_disk\_name\_suffix) | String to append after instance name (useful for managing legacy deployments) | `string` | `"---boot-disk"` | no |
 | <a name="input_gcp_coordinator_disk_size"></a> [gcp\_coordinator\_disk\_size](#input\_gcp\_coordinator\_disk\_size) | Runner coordinator boot disk size in gigabytes | `number` | `10` | no |
 | <a name="input_gcp_coordinator_disk_type"></a> [gcp\_coordinator\_disk\_type](#input\_gcp\_coordinator\_disk\_type) | Runner coordinator boot disk type | `string` | `"pd-standard"` | no |

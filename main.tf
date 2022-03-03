@@ -132,7 +132,7 @@ resource "google_project_iam_member" "gha-coordinator-sa-role" {
 }
 
 resource "google_compute_disk" "gha-coordinator-bootdisk" {
-  name    = format("%s%s", var.gcp_coordinator_name, var.gcp_coordinator_disk_name_suffix)
+  name    = format("%s%s", coalesce(var.gcp_coordinator_disk_name_prefix, var.gcp_coordinator_name), var.gcp_coordinator_disk_name_suffix)
   size    = var.gcp_coordinator_disk_size
   zone    = var.gcp_zone
   type    = var.gcp_coordinator_disk_type
