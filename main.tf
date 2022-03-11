@@ -191,4 +191,5 @@ resource "google_compute_instance" "gha-coordinator" {
   }
 
   project = var.gcp_project
+  deletion_protection = true
 }
