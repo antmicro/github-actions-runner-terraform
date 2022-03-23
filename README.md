@@ -12,6 +12,7 @@ In order to deploy the infrastructure,
 make sure that the service account has the following roles assigned:
 
 * **Compute Admin** for creating and managing resources within the Compute Engine.
+* **Security Admin** for managing IAM policies.
 * **Service Account Creator** for managing the service account linked with the coordinator instance.
 * **Service Account User** for assigning the aforementioned service account to the coordinator instance.
 
