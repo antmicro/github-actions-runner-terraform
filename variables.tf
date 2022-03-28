@@ -69,3 +69,9 @@ variable "gcp_service_account" {
   description = "Name component of the service account for coordinator"
   default     = "gha-runner-coordinator-sa"
 }
+
+variable "gcp_sa_access_scope" {
+  type        = string
+  description = "API access scope for coordinator service account"
+  default     = "https://www.googleapis.com/auth/compute"
+}

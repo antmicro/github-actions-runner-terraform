@@ -181,7 +181,7 @@ resource "google_compute_instance" "gha-coordinator" {
 
   service_account {
     email  = google_service_account.gha-coordinator-sa.email
-    scopes = ["https://www.googleapis.com/auth/compute"]
+    scopes = [var.gcp_sa_access_scope]
   }
 
   lifecycle {
