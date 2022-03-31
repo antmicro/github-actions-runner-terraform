@@ -137,7 +137,7 @@ resource "google_compute_disk" "gha-coordinator-bootdisk" {
   size    = var.gcp_coordinator_disk_size
   zone    = var.gcp_zone
   type    = var.gcp_coordinator_disk_type
-  image   = "projects/debian-cloud/global/images/debian-10-buster-v20210512"
+  image   = var.gcp_coordinator_disk_image
   project = var.gcp_project
 }
 

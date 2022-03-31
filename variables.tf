@@ -75,3 +75,9 @@ variable "gcp_sa_access_scope" {
   description = "API access scope for coordinator service account"
   default     = "https://www.googleapis.com/auth/compute"
 }
+
+variable "gcp_coordinator_disk_image" {
+  type        = string
+  description = "Name of the image to use for coordinator boot disk"
+  default     = "projects/debian-cloud/global/images/debian-10-buster-v20210512"
+}
