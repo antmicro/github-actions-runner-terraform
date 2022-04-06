@@ -81,3 +81,27 @@ variable "gcp_coordinator_disk_image" {
   description = "Name of the image to use for coordinator boot disk"
   default     = "projects/debian-cloud/global/images/debian-10-buster-v20210512"
 }
+
+variable "gcp_coordinator_persistent_disk_size" {
+  type        = number
+  description = "Runner coordinator persistent disk size in gigabytes"
+  default     = 50
+}
+
+variable "gcp_coordinator_persistent_disk_present" {
+  type        = bool
+  description = "Specify if a sepearate disk for persistent data should be created and managed"
+  default     = false
+}
+
+variable "gcp_coordinator_sif_image_disk_present" {
+  type        = bool
+  description = "Specify if a sepearate disk for image should be attached"
+  default     = false
+}
+
+variable "gcp_coordinator_sif_image_disk_name" {
+  type        = string
+  description = "Name of the disk containing sif image of the coordinator"
+  default     = ""
+}

@@ -23,6 +23,8 @@
 locals {
   zone_no_sub    = strrev(substr(strrev(var.gcp_zone), 2, -1))
   log_disk_count = var.gcp_coordinator_log_disk_present == true ? 1 : 0
+  sif_image_disk_count = var.gcp_coordinator_sif_image_disk_present == true ? 1 : 0
+  persistent_disk_count = var.gcp_coordinator_persistent_disk_present == true ? 1 : 0
   c_tag          = "coordinator"
   r_tag          = "runners"
 }
@@ -154,6 +156,29 @@ resource "google_compute_attached_disk" "gha-coordinator-logdisk-attached" {
   disk        = google_compute_disk.gha-coordinator-logdisk[count.index].id
   instance    = google_compute_instance.gha-coordinator.id
   count       = local.log_disk_count
+}
+
+resource "google_compute_disk" "gha-coordinator-persistentdisk" {
+  name    = "${var.gcp_coordinator_name}--persistent"
+  size    = var.gcp_coordinator_persistent_disk_size
+  zone    = var.gcp_zone
+  project = var.gcp_project
+  count   = local.persistent_disk_count
+}
+
+resource "google_compute_attached_disk" "gha-coordinator-persistentdisk-attached" {
+  device_name = "gharunnerpersistentdisk"
+  disk        = google_compute_disk.gha-coordinator-persistentdisk[count.index].id
+  instance    = google_compute_instance.gha-coordinator.id
+  count       = local.persistent_disk_count
+}
+
+resource "google_compute_attached_disk" "gha-coordinator-sifimagedisk-attached" {
+  device_name = "gharunnersifimagedisk"
+  disk        = var.gcp_coordinator_sif_image_disk_name
+  instance    = google_compute_instance.gha-coordinator.id
+  mode        = "READ_ONLY"
+  count       = local.sif_image_disk_count
 }
 
 resource "google_compute_instance" "gha-coordinator" {
