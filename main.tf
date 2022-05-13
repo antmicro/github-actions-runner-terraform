@@ -173,9 +173,18 @@ resource "google_compute_attached_disk" "gha-coordinator-persistentdisk-attached
   count       = local.persistent_disk_count
 }
 
+resource "google_compute_disk" "gha-coordinator-sifimagedisk" {
+  name    = "${var.gcp_coordinator_name}--sifimage"
+  size    = 10
+  zone    = var.gcp_zone
+  image   = var.gcp_coordinator_sif_image_name
+  project = var.gcp_project
+  count   = local.sif_image_disk_count
+}
+
 resource "google_compute_attached_disk" "gha-coordinator-sifimagedisk-attached" {
   device_name = "gharunnersifimagedisk"
-  disk        = var.gcp_coordinator_sif_image_disk_name
+  disk        = google_compute_disk.gha-coordinator-sifimagedisk[count.index].id
   instance    = google_compute_instance.gha-coordinator.id
   mode        = "READ_ONLY"
   count       = local.sif_image_disk_count

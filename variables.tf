@@ -100,9 +100,9 @@ variable "gcp_coordinator_sif_image_disk_present" {
   default     = false
 }
 
-variable "gcp_coordinator_sif_image_disk_name" {
+variable "gcp_coordinator_sif_image_name" {
   type        = string
-  description = "Name of the disk containing sif image of the coordinator (beta)"
+  description = "Name of the image containing sif image of the coordinator (beta)"
   default     = ""
 }
 
