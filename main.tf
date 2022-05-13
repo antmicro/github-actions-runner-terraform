@@ -216,6 +216,10 @@ resource "google_compute_instance" "gha-coordinator" {
     ]
   }
 
+  metadata = {
+    SCALE = var.gcp_coordinator_scale > 0 ? var.gcp_coordinator_scale : null
+  }
+
   project = var.gcp_project
   deletion_protection = true
 }

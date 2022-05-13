@@ -105,3 +105,9 @@ variable "gcp_coordinator_sif_image_disk_name" {
   description = "Name of the disk containing sif image of the coordinator (beta)"
   default     = ""
 }
+
+variable "gcp_coordinator_scale" {
+  type        = number
+  description = "Number of runners that coordinator should enable (beta)"
+  default     = "0"
+}
