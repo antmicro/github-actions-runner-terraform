@@ -44,6 +44,7 @@ No modules.
 | [google_compute_disk.gha-coordinator-bootdisk](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_disk) | resource |
 | [google_compute_disk.gha-coordinator-logdisk](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_disk) | resource |
 | [google_compute_disk.gha-coordinator-persistentdisk](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_disk) | resource |
+| [google_compute_disk.gha-coordinator-sifimagedisk](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_disk) | resource |
 | [google_compute_firewall.gha-firewall-allow-c-to-r](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_firewall) | resource |
 | [google_compute_firewall.gha-firewall-allow-incoming-ssh](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_firewall) | resource |
 | [google_compute_firewall.gha-firewall-allow-unbound](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_firewall) | resource |
@@ -71,8 +72,9 @@ No modules.
 | <a name="input_gcp_coordinator_name"></a> [gcp\_coordinator\_name](#input\_gcp\_coordinator\_name) | Runner coordinator instance name | `string` | `"gha-runner-coordinator"` | no |
 | <a name="input_gcp_coordinator_persistent_disk_present"></a> [gcp\_coordinator\_persistent\_disk\_present](#input\_gcp\_coordinator\_persistent\_disk\_present) | Specify if a sepearate disk for persistent data should be created and managed (beta) | `bool` | `false` | no |
 | <a name="input_gcp_coordinator_persistent_disk_size"></a> [gcp\_coordinator\_persistent\_disk\_size](#input\_gcp\_coordinator\_persistent\_disk\_size) | Runner coordinator persistent disk size in gigabytes (beta) | `number` | `50` | no |
-| <a name="input_gcp_coordinator_sif_image_disk_name"></a> [gcp\_coordinator\_sif\_image\_disk\_name](#input\_gcp\_coordinator\_sif\_image\_disk\_name) | Name of the disk containing sif image of the coordinator (beta) | `string` | `""` | no |
+| <a name="input_gcp_coordinator_scale"></a> [gcp\_coordinator\_scale](#input\_gcp\_coordinator\_scale) | Number of runners that coordinator should enable (beta) | `number` | `"0"` | no |
 | <a name="input_gcp_coordinator_sif_image_disk_present"></a> [gcp\_coordinator\_sif\_image\_disk\_present](#input\_gcp\_coordinator\_sif\_image\_disk\_present) | Specify if a sepearate disk for image should be attached (beta) | `bool` | `false` | no |
+| <a name="input_gcp_coordinator_sif_image_name"></a> [gcp\_coordinator\_sif\_image\_name](#input\_gcp\_coordinator\_sif\_image\_name) | Name of the image containing sif image of the coordinator (beta) | `string` | `""` | no |
 | <a name="input_gcp_project"></a> [gcp\_project](#input\_gcp\_project) | Project name | `string` | n/a | yes |
 | <a name="input_gcp_sa_access_scope"></a> [gcp\_sa\_access\_scope](#input\_gcp\_sa\_access\_scope) | API access scope for coordinator service account | `string` | `"https://www.googleapis.com/auth/compute"` | no |
 | <a name="input_gcp_service_account"></a> [gcp\_service\_account](#input\_gcp\_service\_account) | Name component of the service account for coordinator | `string` | `"gha-runner-coordinator-sa"` | no |
