@@ -134,6 +134,24 @@ resource "google_project_iam_member" "gha-coordinator-sa-role" {
   project = var.gcp_project
 }
 
+resource "google_project_iam_member" "gha-coordinator-sa-role-sa-user" {
+  role    = "roles/iam.serviceAccountUser"
+  member  = "serviceAccount:${google_service_account.gha-coordinator-sa.email}"
+  project = var.gcp_project
+}
+
+resource "google_project_iam_member" "gha-coordinator-sa-role-sm-viewer" {
+  role    = "roles/secretmanager.viewer"
+  member  = "serviceAccount:${google_service_account.gha-coordinator-sa.email}"
+  project = var.gcp_project
+}
+
+resource "google_project_iam_member" "gha-coordinator-sa-role-sm-accessor" {
+  role    = "roles/secretmanager.secretAccessor"
+  member  = "serviceAccount:${google_service_account.gha-coordinator-sa.email}"
+  project = var.gcp_project
+}
+
 resource "google_compute_disk" "gha-coordinator-bootdisk" {
   name    = format("%s%s", coalesce(var.gcp_coordinator_disk_name_prefix, var.gcp_coordinator_name), var.gcp_coordinator_disk_name_suffix)
   size    = var.gcp_coordinator_disk_size
