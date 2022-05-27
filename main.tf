@@ -17,7 +17,9 @@
  * * **Service Account Creator** for managing the service account linked with the coordinator instance.
  * * **Service Account User** for assigning the aforementioned service account to the coordinator instance.
  *
- *
+ * Note that there is no explicit module-level parameter for passing the project name.
+ * If you don't want Terraform to use the default value, 
+ * declare a provider, set the `project` argument and pass the provider as a [meta-argument](https://www.terraform.io/language/meta-arguments/module-providers) to the module declaration.
  */
 
 locals {
