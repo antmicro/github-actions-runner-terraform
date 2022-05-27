@@ -31,7 +31,6 @@ locals {
 
 resource "google_compute_network" "gha-network" {
   name                    = var.gcp_subnet
-  project                 = var.gcp_project
   auto_create_subnetworks = false
 }
 
@@ -40,7 +39,6 @@ resource "google_compute_subnetwork" "gha-subnet" {
   network       = google_compute_network.gha-network.id
   region        = local.zone_no_sub
   ip_cidr_range = "10.0.0.0/16"
-  project       = var.gcp_project
 }
 
 resource "google_compute_firewall" "gha-firewall-allow-unbound" {
@@ -50,7 +48,6 @@ resource "google_compute_firewall" "gha-firewall-allow-unbound" {
   priority    = 999
   target_tags = [local.c_tag]
   source_tags = [local.r_tag]
-  project     = var.gcp_project
 
   allow {
     protocol = "udp"
@@ -69,7 +66,6 @@ resource "google_compute_firewall" "gha-firewall-drop-incoming-r-to-c" {
   priority    = 1000
   target_tags = [local.c_tag]
   source_tags = [local.r_tag]
-  project     = var.gcp_project
 
   # TODO: This might be erroneous, take a look at it later.
   allow {
@@ -84,7 +80,6 @@ resource "google_compute_firewall" "gha-firewall-allow-c-to-r" {
   priority    = 1000
   target_tags = [local.r_tag]
   source_tags = [local.c_tag]
-  project     = var.gcp_project
 
   allow {
     protocol = "all"
@@ -98,7 +93,6 @@ resource "google_compute_firewall" "gha-firewall-allow-incoming-ssh" {
   priority      = 1001
   target_tags   = [local.c_tag]
   source_ranges = ["0.0.0.0/0"]
-  project       = var.gcp_project
 
   allow {
     protocol = "all"
@@ -109,7 +103,6 @@ resource "google_compute_router" "gha-router" {
   name    = "${var.gcp_subnet}---cloud-router"
   network = google_compute_network.gha-network.id
   region  = local.zone_no_sub
-  project = var.gcp_project
 }
 
 resource "google_compute_router_nat" "gha-nat" {
@@ -119,37 +112,31 @@ resource "google_compute_router_nat" "gha-nat" {
   nat_ip_allocate_option             = "AUTO_ONLY"
   source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
   min_ports_per_vm                   = 512
-  project                            = var.gcp_project
 }
 
 resource "google_service_account" "gha-coordinator-sa" {
   account_id   = var.gcp_service_account
   display_name = "SA for GHA Runner"
-  project      = var.gcp_project
 }
 
 resource "google_project_iam_member" "gha-coordinator-sa-role" {
   role    = "roles/compute.admin"
   member  = "serviceAccount:${google_service_account.gha-coordinator-sa.email}"
-  project = var.gcp_project
 }
 
 resource "google_project_iam_member" "gha-coordinator-sa-role-sa-user" {
   role    = "roles/iam.serviceAccountUser"
   member  = "serviceAccount:${google_service_account.gha-coordinator-sa.email}"
-  project = var.gcp_project
 }
 
 resource "google_project_iam_member" "gha-coordinator-sa-role-sm-viewer" {
   role    = "roles/secretmanager.viewer"
   member  = "serviceAccount:${google_service_account.gha-coordinator-sa.email}"
-  project = var.gcp_project
 }
 
 resource "google_project_iam_member" "gha-coordinator-sa-role-sm-accessor" {
   role    = "roles/secretmanager.secretAccessor"
   member  = "serviceAccount:${google_service_account.gha-coordinator-sa.email}"
-  project = var.gcp_project
 }
 
 resource "google_compute_disk" "gha-coordinator-bootdisk" {
@@ -158,14 +145,12 @@ resource "google_compute_disk" "gha-coordinator-bootdisk" {
   zone    = var.gcp_zone
   type    = var.gcp_coordinator_disk_type
   image   = var.gcp_coordinator_disk_image
-  project = var.gcp_project
 }
 
 resource "google_compute_disk" "gha-coordinator-logdisk" {
   name    = "${var.gcp_coordinator_name}--logs"
   size    = var.gcp_coordinator_log_disk_size
   zone    = var.gcp_zone
-  project = var.gcp_project
   count   = local.log_disk_count
 }
 
@@ -180,7 +165,6 @@ resource "google_compute_disk" "gha-coordinator-persistentdisk" {
   name    = "${var.gcp_coordinator_name}--persistent"
   size    = var.gcp_coordinator_persistent_disk_size
   zone    = var.gcp_zone
-  project = var.gcp_project
   count   = local.persistent_disk_count
 }
 
@@ -196,7 +180,6 @@ resource "google_compute_disk" "gha-coordinator-sifimagedisk" {
   size    = 10
   zone    = var.gcp_zone
   image   = var.gcp_coordinator_sif_image_name
-  project = var.gcp_project
   count   = local.sif_image_disk_count
 }
 
@@ -247,6 +230,5 @@ resource "google_compute_instance" "gha-coordinator" {
     SCALE = var.gcp_coordinator_scale > 0 ? var.gcp_coordinator_scale : null
   }
 
-  project = var.gcp_project
   deletion_protection = true
 }

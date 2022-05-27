@@ -53,11 +53,6 @@ variable "gcp_zone" {
   default     = "us-west1-a"
 }
 
-variable "gcp_project" {
-  type        = string
-  description = "Project name"
-}
-
 variable "gcp_subnet" {
   type        = string
   description = "Name for VPC network and subnetwork"
