@@ -53,6 +53,12 @@ variable "gcp_zone" {
   default     = "us-west1-a"
 }
 
+variable "gcp_auxiliary_zones" {
+  type        = list(any)
+  description = "A list of zones where workers can be spawned in case of home zone resource exhaustion"
+  default     = []
+}
+
 variable "gcp_subnet" {
   type        = string
   description = "Name for VPC network and subnetwork"
