@@ -23,12 +23,12 @@
  */
 
 locals {
-  zone_no_sub    = strrev(substr(strrev(var.gcp_zone), 2, -1))
-  log_disk_count = var.gcp_coordinator_log_disk_present == true ? 1 : 0
-  sif_image_disk_count = var.gcp_coordinator_sif_image_disk_present == true ? 1 : 0
+  zone_no_sub           = strrev(substr(strrev(var.gcp_zone), 2, -1))
+  log_disk_count        = var.gcp_coordinator_log_disk_present == true ? 1 : 0
+  sif_image_disk_count  = var.gcp_coordinator_sif_image_disk_present == true ? 1 : 0
   persistent_disk_count = var.gcp_coordinator_persistent_disk_present == true ? 1 : 0
-  c_tag          = "coordinator"
-  r_tag          = "runners"
+  c_tag                 = "coordinator"
+  r_tag                 = "runners"
 }
 
 resource "google_compute_network" "gha-network" {
@@ -122,38 +122,38 @@ resource "google_service_account" "gha-coordinator-sa" {
 }
 
 resource "google_project_iam_member" "gha-coordinator-sa-role" {
-  role    = "roles/compute.admin"
-  member  = "serviceAccount:${google_service_account.gha-coordinator-sa.email}"
+  role   = "roles/compute.admin"
+  member = "serviceAccount:${google_service_account.gha-coordinator-sa.email}"
 }
 
 resource "google_project_iam_member" "gha-coordinator-sa-role-sa-user" {
-  role    = "roles/iam.serviceAccountUser"
-  member  = "serviceAccount:${google_service_account.gha-coordinator-sa.email}"
+  role   = "roles/iam.serviceAccountUser"
+  member = "serviceAccount:${google_service_account.gha-coordinator-sa.email}"
 }
 
 resource "google_project_iam_member" "gha-coordinator-sa-role-sm-viewer" {
-  role    = "roles/secretmanager.viewer"
-  member  = "serviceAccount:${google_service_account.gha-coordinator-sa.email}"
+  role   = "roles/secretmanager.viewer"
+  member = "serviceAccount:${google_service_account.gha-coordinator-sa.email}"
 }
 
 resource "google_project_iam_member" "gha-coordinator-sa-role-sm-accessor" {
-  role    = "roles/secretmanager.secretAccessor"
-  member  = "serviceAccount:${google_service_account.gha-coordinator-sa.email}"
+  role   = "roles/secretmanager.secretAccessor"
+  member = "serviceAccount:${google_service_account.gha-coordinator-sa.email}"
 }
 
 resource "google_compute_disk" "gha-coordinator-bootdisk" {
-  name    = format("%s%s", coalesce(var.gcp_coordinator_disk_name_prefix, var.gcp_coordinator_name), var.gcp_coordinator_disk_name_suffix)
-  size    = var.gcp_coordinator_disk_size
-  zone    = var.gcp_zone
-  type    = var.gcp_coordinator_disk_type
-  image   = var.gcp_coordinator_disk_image
+  name  = format("%s%s", coalesce(var.gcp_coordinator_disk_name_prefix, var.gcp_coordinator_name), var.gcp_coordinator_disk_name_suffix)
+  size  = var.gcp_coordinator_disk_size
+  zone  = var.gcp_zone
+  type  = var.gcp_coordinator_disk_type
+  image = var.gcp_coordinator_disk_image
 }
 
 resource "google_compute_disk" "gha-coordinator-logdisk" {
-  name    = "${var.gcp_coordinator_name}--logs"
-  size    = var.gcp_coordinator_log_disk_size
-  zone    = var.gcp_zone
-  count   = local.log_disk_count
+  name  = "${var.gcp_coordinator_name}--logs"
+  size  = var.gcp_coordinator_log_disk_size
+  zone  = var.gcp_zone
+  count = local.log_disk_count
 }
 
 resource "google_compute_attached_disk" "gha-coordinator-logdisk-attached" {
@@ -164,10 +164,10 @@ resource "google_compute_attached_disk" "gha-coordinator-logdisk-attached" {
 }
 
 resource "google_compute_disk" "gha-coordinator-persistentdisk" {
-  name    = "${var.gcp_coordinator_name}--persistent"
-  size    = var.gcp_coordinator_persistent_disk_size
-  zone    = var.gcp_zone
-  count   = local.persistent_disk_count
+  name  = "${var.gcp_coordinator_name}--persistent"
+  size  = var.gcp_coordinator_persistent_disk_size
+  zone  = var.gcp_zone
+  count = local.persistent_disk_count
 }
 
 resource "google_compute_attached_disk" "gha-coordinator-persistentdisk-attached" {
@@ -178,11 +178,11 @@ resource "google_compute_attached_disk" "gha-coordinator-persistentdisk-attached
 }
 
 resource "google_compute_disk" "gha-coordinator-sifimagedisk" {
-  name    = "${var.gcp_coordinator_name}--sifimage"
-  size    = 10
-  zone    = var.gcp_zone
-  image   = var.gcp_coordinator_sif_image_name
-  count   = local.sif_image_disk_count
+  name  = "${var.gcp_coordinator_name}--sifimage"
+  size  = 10
+  zone  = var.gcp_zone
+  image = var.gcp_coordinator_sif_image_name
+  count = local.sif_image_disk_count
 }
 
 resource "google_compute_attached_disk" "gha-coordinator-sifimagedisk-attached" {
