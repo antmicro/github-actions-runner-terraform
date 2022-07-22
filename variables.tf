@@ -55,7 +55,7 @@ variable "gcp_zone" {
 
 variable "gcp_auxiliary_zones" {
   type        = list(any)
-  description = "A list of zones where workers can be spawned in case of home zone resource exhaustion"
+  description = "A list of zones where workers can be spawned in case of home zone resource exhaustion (beta)"
   default     = []
 }
 
