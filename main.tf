@@ -43,6 +43,14 @@ resource "google_compute_subnetwork" "gha-subnet" {
   ip_cidr_range = "10.0.0.0/16"
 }
 
+resource "google_compute_subnetwork" "gha-aux-subnet" {
+  count         = length(var.gcp_auxiliary_zones)
+  name          = "${var.gcp_subnet}-aux-${count.index}"
+  network       = google_compute_network.gha-network.id
+  region        = var.gcp_auxiliary_zones[count.index]
+  ip_cidr_range = "10.${count.index + 1}.0.0/16"
+}
+
 resource "google_compute_firewall" "gha-firewall-allow-unbound" {
   name        = "${var.gcp_subnet}---allow-coordinator-services"
   network     = google_compute_network.gha-network.id
