@@ -109,18 +109,30 @@ resource "google_compute_firewall" "gha-firewall-allow-incoming-ssh" {
 }
 
 resource "google_compute_router" "gha-router" {
-  name    = "${var.gcp_subnet}---cloud-router"
+  count   = length(local.regions)
+  name    = count.index > 0 ? "${var.gcp_subnet}---cloud-router-${count.index}" : "${var.gcp_subnet}---cloud-router"
   network = google_compute_network.gha-network.id
-  region  = local.zone_no_sub
+  region  = local.regions[count.index]
+}
+
+moved {
+  from = google_compute_subnetwork.gha-router
+  to   = google_compute_subnetwork.gha-router[0]
 }
 
 resource "google_compute_router_nat" "gha-nat" {
-  name                               = "${var.gcp_subnet}---gateway"
-  router                             = google_compute_router.gha-router.name
-  region                             = local.zone_no_sub
+  count                              = length(google_compute_router.gha-router)
+  name                               = count.index > 0 ? "${var.gcp_subnet}---gateway-${count.index}" : "${var.gcp_subnet}---gateway"
+  router                             = google_compute_router.gha-router[count.index].name
+  region                             = google_compute_router.gha-router[count.index].region
   nat_ip_allocate_option             = "AUTO_ONLY"
   source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
   min_ports_per_vm                   = 512
+}
+
+moved {
+  from = google_compute_router_nat.gha-nat
+  to   = google_compute_router_nat.gha-nat[0]
 }
 
 resource "google_service_account" "gha-coordinator-sa" {
