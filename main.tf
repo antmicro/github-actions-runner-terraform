@@ -24,6 +24,7 @@
 
 locals {
   zone_no_sub           = strrev(substr(strrev(var.gcp_zone), 2, -1))
+  regions               = concat([local.zone_no_sub], var.gcp_auxiliary_zones)
   log_disk_count        = var.gcp_coordinator_log_disk_present == true ? 1 : 0
   sif_image_disk_count  = var.gcp_coordinator_sif_image_disk_present == true ? 1 : 0
   persistent_disk_count = var.gcp_coordinator_persistent_disk_present == true ? 1 : 0
@@ -37,18 +38,16 @@ resource "google_compute_network" "gha-network" {
 }
 
 resource "google_compute_subnetwork" "gha-subnet" {
-  name          = var.gcp_subnet
+  count         = length(local.regions)
+  name          = count.index > 0 ? "${var.gcp_subnet}-aux-${count.index}" : var.gcp_subnet
   network       = google_compute_network.gha-network.id
-  region        = local.zone_no_sub
-  ip_cidr_range = "10.0.0.0/16"
+  region        = local.regions[count.index]
+  ip_cidr_range = "10.${count.index}.0.0/16"
 }
 
-resource "google_compute_subnetwork" "gha-aux-subnet" {
-  count         = length(var.gcp_auxiliary_zones)
-  name          = "${var.gcp_subnet}-aux-${count.index}"
-  network       = google_compute_network.gha-network.id
-  region        = var.gcp_auxiliary_zones[count.index]
-  ip_cidr_range = "10.${count.index + 1}.0.0/16"
+moved {
+  from = google_compute_subnetwork.gha-subnet
+  to   = google_compute_subnetwork.gha-subnet[0]
 }
 
 resource "google_compute_firewall" "gha-firewall-allow-unbound" {
@@ -219,7 +218,7 @@ resource "google_compute_instance" "gha-coordinator" {
 
   network_interface {
     network    = google_compute_network.gha-network.id
-    subnetwork = google_compute_subnetwork.gha-subnet.id
+    subnetwork = google_compute_subnetwork.gha-subnet[0].id
 
     access_config {}
   }
