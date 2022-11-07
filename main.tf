@@ -32,6 +32,8 @@ locals {
   r_tag                 = "runners"
 }
 
+data "google_project" "project" {}
+
 resource "google_compute_network" "gha-network" {
   name                    = var.gcp_subnet
   auto_create_subnetworks = false
@@ -141,23 +143,27 @@ resource "google_service_account" "gha-coordinator-sa" {
 }
 
 resource "google_project_iam_member" "gha-coordinator-sa-role" {
-  role   = "roles/compute.admin"
-  member = "serviceAccount:${google_service_account.gha-coordinator-sa.email}"
+  role    = "roles/compute.admin"
+  member  = "serviceAccount:${google_service_account.gha-coordinator-sa.email}"
+  project = data.google_project.project.project_id
 }
 
 resource "google_project_iam_member" "gha-coordinator-sa-role-sa-user" {
-  role   = "roles/iam.serviceAccountUser"
-  member = "serviceAccount:${google_service_account.gha-coordinator-sa.email}"
+  role    = "roles/iam.serviceAccountUser"
+  member  = "serviceAccount:${google_service_account.gha-coordinator-sa.email}"
+  project = data.google_project.project.project_id
 }
 
 resource "google_project_iam_member" "gha-coordinator-sa-role-sm-viewer" {
-  role   = "roles/secretmanager.viewer"
-  member = "serviceAccount:${google_service_account.gha-coordinator-sa.email}"
+  role    = "roles/secretmanager.viewer"
+  member  = "serviceAccount:${google_service_account.gha-coordinator-sa.email}"
+  project = data.google_project.project.project_id
 }
 
 resource "google_project_iam_member" "gha-coordinator-sa-role-sm-accessor" {
-  role   = "roles/secretmanager.secretAccessor"
-  member = "serviceAccount:${google_service_account.gha-coordinator-sa.email}"
+  role    = "roles/secretmanager.secretAccessor"
+  member  = "serviceAccount:${google_service_account.gha-coordinator-sa.email}"
+  project = data.google_project.project.project_id
 }
 
 resource "google_compute_disk" "gha-coordinator-bootdisk" {
