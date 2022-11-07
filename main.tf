@@ -45,6 +45,9 @@ resource "google_compute_subnetwork" "gha-subnet" {
   network       = google_compute_network.gha-network.id
   region        = local.regions[count.index]
   ip_cidr_range = "10.${count.index}.0.0/16"
+
+  stack_type       = var.gcp_vpc_ipv6 == true ? "IPV4_IPV6" : "IPV4_ONLY"
+  ipv6_access_type = var.gcp_vpc_ipv6 == true ? "EXTERNAL" : null
 }
 
 moved {
