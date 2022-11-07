@@ -112,3 +112,9 @@ variable "gcp_coordinator_scale" {
   description = "Number of runners that coordinator should enable (beta)"
   default     = "0"
 }
+
+variable "gcp_vpc_ipv6" {
+  type        = bool
+  description = "Enable external IPv6 access for worker machines"
+  default     = false
+}
