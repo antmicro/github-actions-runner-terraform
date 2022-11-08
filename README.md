@@ -20,6 +20,25 @@ Note that there is no explicit module-level parameter for passing the project na
 If you don't want Terraform to use the default value,
 declare a provider, set the `project` argument and pass the provider as a [meta-argument](https://www.terraform.io/language/meta-arguments/module-providers) to the module declaration.
 
+## Long-term usage considerations
+
+Changing certain parameters after the module has been applied may result
+in the necessity to recreate one or more resources.
+This section is an attempt to document these scenarios.
+
+### Enabling or disabling IPv6 support
+
+Changing the `gcp_vpc_ipv6` variable will always result in recreation of all subnetworks.
+That's because it is not possible to edit the stack type (IPv4 only or dual stack) of the subnetwork
+after it has been created.
+Therefore, in order to change this particular parameter of a subnetwork, it is necessary to first
+remove it and create it again.
+
+For this operation to succeed, the following preconditions must be true:
+* no worker instance may be running
+* the coordinator instance must be stopped
+* the network associated with the coordinator instance must be changed to something else (e.g. default)
+
 ## Requirements
 
 | Name | Version |
@@ -87,6 +106,7 @@ No modules.
 | <a name="input_gcp_sa_access_scope"></a> [gcp\_sa\_access\_scope](#input\_gcp\_sa\_access\_scope) | API access scope for coordinator service account | `string` | `"https://www.googleapis.com/auth/compute"` | no |
 | <a name="input_gcp_service_account"></a> [gcp\_service\_account](#input\_gcp\_service\_account) | Name component of the service account for coordinator | `string` | `"gha-runner-coordinator-sa"` | no |
 | <a name="input_gcp_subnet"></a> [gcp\_subnet](#input\_gcp\_subnet) | Name for VPC network and subnetwork | `string` | `"gha-runner-net"` | no |
+| <a name="input_gcp_vpc_ipv6"></a> [gcp\_vpc\_ipv6](#input\_gcp\_vpc\_ipv6) | Enable external IPv6 access for worker machines | `bool` | `false` | no |
 | <a name="input_gcp_zone"></a> [gcp\_zone](#input\_gcp\_zone) | Zone where the coordinator instance, VPC resources and workers will be created | `string` | `"us-west1-a"` | no |
 
 ## Outputs

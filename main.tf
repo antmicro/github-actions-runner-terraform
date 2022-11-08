@@ -20,6 +20,26 @@
  * Note that there is no explicit module-level parameter for passing the project name.
  * If you don't want Terraform to use the default value, 
  * declare a provider, set the `project` argument and pass the provider as a [meta-argument](https://www.terraform.io/language/meta-arguments/module-providers) to the module declaration.
+ *
+ * ## Long-term usage considerations
+ *
+ * Changing certain parameters after the module has been applied may result
+ * in the necessity to recreate one or more resources.
+ * This section is an attempt to document these scenarios.
+ *
+ * ### Enabling or disabling IPv6 support
+ *
+ * Changing the `gcp_vpc_ipv6` variable will always result in recreation of all subnetworks.
+ * That's because it is not possible to edit the stack type (IPv4 only or dual stack) of the subnetwork
+ * after it has been created.
+ * Therefore, in order to change this particular parameter of a subnetwork, it is necessary to first
+ * remove it and create it again.
+ *
+ * For this operation to succeed, the following preconditions must be true:
+ * * no worker instance may be running
+ * * the coordinator instance must be stopped
+ * * the network associated with the coordinator instance must be changed to something else (e.g. default)
+ *
  */
 
 locals {
