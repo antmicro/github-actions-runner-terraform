@@ -282,3 +282,8 @@ resource "google_compute_instance" "gha-coordinator" {
 
   deletion_protection = true
 }
+
+output "coordinator_sa" {
+  value       = google_service_account.gha-coordinator-sa.email
+  description = "The email address of the service account assigned to the coordinator machine"
+}

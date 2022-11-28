@@ -111,4 +111,6 @@ No modules.
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_coordinator_sa"></a> [coordinator\_sa](#output\_coordinator\_sa) | The email address of the service account assigned to the coordinator machine |
