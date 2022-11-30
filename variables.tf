@@ -113,6 +113,12 @@ variable "gcp_coordinator_scale" {
   default     = "0"
 }
 
+variable "gcp_worker_image_name" {
+  type        = string
+  description = "Name of the image used for worker instances (beta)"
+  default     = ""
+}
+
 variable "gcp_vpc_ipv6" {
   type        = bool
   description = "Enable external IPv6 access for worker machines"
