@@ -124,3 +124,9 @@ variable "gcp_vpc_ipv6" {
   description = "Enable external IPv6 access for worker machines"
   default     = false
 }
+
+variable "gcp_vpc_no_firewall" {
+  type        = bool
+  description = "Do not create firewall rules in the dedicated VPC network"
+  default     = false
+}

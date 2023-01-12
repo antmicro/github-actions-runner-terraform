@@ -48,6 +48,7 @@ locals {
   log_disk_count        = var.gcp_coordinator_log_disk_present == true ? 1 : 0
   sif_image_disk_count  = var.gcp_coordinator_sif_image_disk_present == true ? 1 : 0
   persistent_disk_count = var.gcp_coordinator_persistent_disk_present == true ? 1 : 0
+  fw_count              = var.gcp_vpc_no_firewall == false ? 1 : 0
   c_tag                 = "coordinator"
   r_tag                 = "runners"
 }
@@ -91,6 +92,8 @@ resource "google_compute_firewall" "gha-firewall-allow-unbound" {
     protocol = "tcp"
     ports    = [5000]
   }
+
+  count = local.fw_count
 }
 
 resource "google_compute_firewall" "gha-firewall-drop-incoming-r-to-c" {
@@ -105,6 +108,8 @@ resource "google_compute_firewall" "gha-firewall-drop-incoming-r-to-c" {
   allow {
     protocol = "all"
   }
+
+  count = local.fw_count
 }
 
 resource "google_compute_firewall" "gha-firewall-allow-c-to-r" {
@@ -118,6 +123,8 @@ resource "google_compute_firewall" "gha-firewall-allow-c-to-r" {
   allow {
     protocol = "all"
   }
+
+  count = local.fw_count
 }
 
 resource "google_compute_firewall" "gha-firewall-allow-incoming-ssh" {
@@ -131,6 +138,8 @@ resource "google_compute_firewall" "gha-firewall-allow-incoming-ssh" {
   allow {
     protocol = "all"
   }
+
+  count = local.fw_count
 }
 
 resource "google_compute_router" "gha-router" {
