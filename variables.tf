@@ -115,7 +115,7 @@ variable "gcp_coordinator_scale" {
 
 variable "gcp_worker_image_name" {
   type        = string
-  description = "Name of the image used for worker instances (beta)"
+  description = "Name of the image used for worker instances"
   default     = ""
 }
 
