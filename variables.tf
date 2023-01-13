@@ -119,6 +119,12 @@ variable "gcp_worker_image_name" {
   default     = ""
 }
 
+variable "gcp_arm64_worker_image_name" {
+  type        = string
+  description = "Name of the image used for worker instances (ARM64)"
+  default     = ""
+}
+
 variable "gcp_vpc_ipv6" {
   type        = bool
   description = "Enable external IPv6 access for worker machines"
