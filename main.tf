@@ -1,7 +1,7 @@
 /**
  * # Terraform module for GitHub Actions custom runner
  *
- * Copyright (c) 2020-2021 [Antmicro](https://www.antmicro.com)
+ * Copyright (c) 2020-2022 [Antmicro](https://www.antmicro.com)
  *
  * The aim of this project is to simplify the deployment of 
  * [Antmicro's GitHub Actions runner](https://github.com/antmicro/runner)
