@@ -66,6 +66,9 @@ resource "google_project_service" "compute-engine-api" {
 resource "google_compute_network" "gha-network" {
   name                    = var.gcp_subnet
   auto_create_subnetworks = false
+  depends_on = [
+    google_project_service.compute-engine-api
+  ]
 }
 
 resource "google_compute_subnetwork" "gha-subnet" {
@@ -180,6 +183,9 @@ moved {
 resource "google_service_account" "gha-coordinator-sa" {
   account_id   = var.gcp_service_account
   display_name = "SA for GHA Runner"
+  depends_on = [
+    google_project_service.iam-api
+  ]
 }
 
 resource "google_project_iam_member" "gha-coordinator-sa-role" {
@@ -212,6 +218,9 @@ resource "google_compute_disk" "gha-coordinator-bootdisk" {
   zone  = var.gcp_zone
   type  = var.gcp_coordinator_disk_type
   image = var.gcp_coordinator_disk_image
+  depends_on = [
+    google_project_service.compute-engine-api
+  ]
 }
 
 resource "google_compute_disk" "gha-coordinator-logdisk" {
@@ -219,6 +228,9 @@ resource "google_compute_disk" "gha-coordinator-logdisk" {
   size  = var.gcp_coordinator_log_disk_size
   zone  = var.gcp_zone
   count = local.log_disk_count
+  depends_on = [
+    google_project_service.compute-engine-api
+  ]
 }
 
 resource "google_compute_attached_disk" "gha-coordinator-logdisk-attached" {
@@ -233,6 +245,9 @@ resource "google_compute_disk" "gha-coordinator-persistentdisk" {
   size  = var.gcp_coordinator_persistent_disk_size
   zone  = var.gcp_zone
   count = local.persistent_disk_count
+  depends_on = [
+    google_project_service.compute-engine-api
+  ]
 }
 
 resource "google_compute_attached_disk" "gha-coordinator-persistentdisk-attached" {
@@ -248,6 +263,9 @@ resource "google_compute_disk" "gha-coordinator-sifimagedisk" {
   zone  = var.gcp_zone
   image = var.gcp_coordinator_sif_image_name
   count = local.sif_image_disk_count
+  depends_on = [
+    google_project_service.compute-engine-api
+  ]
 }
 
 resource "google_compute_attached_disk" "gha-coordinator-sifimagedisk-attached" {
@@ -300,6 +318,10 @@ resource "google_compute_instance" "gha-coordinator" {
   }
 
   deletion_protection = true
+
+  depends_on = [
+    google_project_service.compute-engine-api
+  ]
 }
 
 output "coordinator_sa" {
