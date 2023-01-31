@@ -55,6 +55,14 @@ locals {
 
 data "google_project" "project" {}
 
+resource "google_project_service" "iam-api" {
+  service = "iam.googleapis.com"
+}
+
+resource "google_project_service" "compute-engine-api" {
+  service = "compute.googleapis.com"
+}
+
 resource "google_compute_network" "gha-network" {
   name                    = var.gcp_subnet
   auto_create_subnetworks = false
