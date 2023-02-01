@@ -15,6 +15,7 @@ make sure that the service account has the following roles assigned:
 * **Security Admin** for managing IAM policies.
 * **Service Account Creator** for managing the service account linked with the coordinator instance.
 * **Service Account User** for assigning the aforementioned service account to the coordinator instance.
+* **Service Usage Admin** for enabling the necessary APIs.
 
 Note that there is no explicit module-level parameter for passing the project name.
 If you don't want Terraform to use the default value,
@@ -81,6 +82,8 @@ No modules.
 | [google_project_iam_member.gha-coordinator-sa-role-sa-user](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
 | [google_project_iam_member.gha-coordinator-sa-role-sm-accessor](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
 | [google_project_iam_member.gha-coordinator-sa-role-sm-viewer](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) | resource |
+| [google_project_service.compute-engine-api](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_service) | resource |
+| [google_project_service.iam-api](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_service) | resource |
 | [google_service_account.gha-coordinator-sa](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/service_account) | resource |
 | [google_project.project](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/project) | data source |
 
