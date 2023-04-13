@@ -148,3 +148,10 @@ variable "gcp_boot_image_bucket_name" {
   description = "Name of the bucket used for uploading and storing boot images"
   default     = ""
 }
+
+variable "gcp_log_bucket_name" {
+  type        = string
+  description = "Name of the bucket used for storing log files"
+  default     = null
+  nullable    = true
+}

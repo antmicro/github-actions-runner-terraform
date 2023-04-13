@@ -47,6 +47,7 @@ locals {
   zone_no_sub           = strrev(substr(strrev(var.gcp_zone), 2, -1))
   regions               = concat([local.zone_no_sub], var.gcp_auxiliary_zones)
   log_disk_count        = var.gcp_coordinator_log_disk_present == true ? 1 : 0
+  log_bucket_count      = var.gcp_log_bucket_name != null ? 1 : 0
   sif_image_disk_count  = var.gcp_coordinator_sif_image_disk_present == true ? 1 : 0
   persistent_disk_count = var.gcp_coordinator_persistent_disk_present == true ? 1 : 0
   fw_count              = var.gcp_vpc_no_firewall == false ? 1 : 0
@@ -62,6 +63,10 @@ resource "google_project_service" "iam-api" {
 
 resource "google_project_service" "compute-engine-api" {
   service = "compute.googleapis.com"
+}
+
+resource "google_project_service" "storage-api" {
+  service = "storage.googleapis.com"
 }
 
 resource "google_compute_network" "gha-network" {
@@ -319,12 +324,38 @@ resource "google_compute_instance" "gha-coordinator" {
     # it has to be set, otherwise wait_for_change will return error
     BOOT_IMAGE_UPDATE = var.gcp_coordinator_boot_image_update
     BOOT_IMAGE_BUCKET = var.gcp_boot_image_bucket_name != "" ? var.gcp_boot_image_bucket_name : null
+    LOG_BUCKET_NAME   = var.gcp_log_bucket_name
   }
 
   deletion_protection = true
 
   depends_on = [
     google_project_service.compute-engine-api
+  ]
+}
+
+resource "google_storage_bucket" "gha-log-bucket" {
+  count    = local.log_bucket_count
+  name     = var.gcp_log_bucket_name
+  location = local.zone_no_sub
+
+  storage_class = "REGIONAL"
+
+  public_access_prevention    = "enforced"
+  uniform_bucket_level_access = true
+
+  depends_on = [
+    google_project_service.storage-api
+  ]
+}
+
+resource "google_storage_bucket_iam_member" "gha-coordinator-sa-role-bucket-creator" {
+  bucket = google_storage_bucket.gha-log-bucket
+  role   = "roles/storage.objectCreator"
+  member = "serviceAccount:${google_service_account.gha-coordinator-sa.email}"
+
+  depends_on = [
+    google_storage_bucket.gha-log-bucket
   ]
 }
 
