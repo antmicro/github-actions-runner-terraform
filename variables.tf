@@ -79,7 +79,7 @@ variable "gcp_sa_access_scope" {
 
 variable "gcp_coordinator_disk_image" {
   type        = string
-  description = "Name of the image to use for coordinator boot disk"
+  description = "Name of the image to use for coordinator boot disk - cannot be changed"
   default     = "projects/debian-cloud/global/images/debian-10-buster-v20210512"
 }
 
@@ -135,4 +135,16 @@ variable "gcp_vpc_no_firewall" {
   type        = bool
   description = "Do not create firewall rules in the dedicated VPC network"
   default     = false
+}
+
+variable "gcp_coordinator_boot_image_update" {
+  type        = string
+  description = "Name of the image to use for updating coordinator boot disk"
+  default     = ""
+}
+
+variable "gcp_boot_image_bucket_name" {
+  type        = string
+  description = "Name of the bucket used for uploading and storing boot images"
+  default     = ""
 }

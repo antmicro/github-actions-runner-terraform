@@ -316,6 +316,9 @@ resource "google_compute_instance" "gha-coordinator" {
     SCALE              = var.gcp_coordinator_scale > 0 ? var.gcp_coordinator_scale : null
     WORKER_IMAGE       = var.gcp_worker_image_name != "" ? var.gcp_worker_image_name : null
     WORKER_IMAGE_ARM64 = var.gcp_arm64_worker_image_name != "" ? var.gcp_arm64_worker_image_name : null
+    # it has to be set, otherwise wait_for_change will return error
+    BOOT_IMAGE_UPDATE = var.gcp_coordinator_boot_image_update
+    BOOT_IMAGE_BUCKET = var.gcp_boot_image_bucket_name != "" ? var.gcp_boot_image_bucket_name : null
   }
 
   deletion_protection = true
