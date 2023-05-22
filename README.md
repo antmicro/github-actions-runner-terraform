@@ -93,7 +93,9 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_gcp_arm64_worker_image_name"></a> [gcp\_arm64\_worker\_image\_name](#input\_gcp\_arm64\_worker\_image\_name) | Name of the image used for worker instances (ARM64) | `string` | `""` | no |
 | <a name="input_gcp_auxiliary_zones"></a> [gcp\_auxiliary\_zones](#input\_gcp\_auxiliary\_zones) | A list of zones where workers can be spawned in case of home zone resource exhaustion (beta) | `list(any)` | `[]` | no |
-| <a name="input_gcp_coordinator_disk_image"></a> [gcp\_coordinator\_disk\_image](#input\_gcp\_coordinator\_disk\_image) | Name of the image to use for coordinator boot disk | `string` | `"projects/debian-cloud/global/images/debian-10-buster-v20210512"` | no |
+| <a name="input_gcp_boot_image_bucket_name"></a> [gcp\_boot\_image\_bucket\_name](#input\_gcp\_boot\_image\_bucket\_name) | Name of the bucket used for uploading and storing boot images | `string` | `""` | no |
+| <a name="input_gcp_coordinator_boot_image_update"></a> [gcp\_coordinator\_boot\_image\_update](#input\_gcp\_coordinator\_boot\_image\_update) | Name of the image to use for updating coordinator boot disk | `string` | `""` | no |
+| <a name="input_gcp_coordinator_disk_image"></a> [gcp\_coordinator\_disk\_image](#input\_gcp\_coordinator\_disk\_image) | Name of the image to use for coordinator boot disk - cannot be changed | `string` | `"projects/debian-cloud/global/images/debian-10-buster-v20210512"` | no |
 | <a name="input_gcp_coordinator_disk_name_prefix"></a> [gcp\_coordinator\_disk\_name\_prefix](#input\_gcp\_coordinator\_disk\_name\_prefix) | Defaults to instance name if not specified. | `string` | `null` | no |
 | <a name="input_gcp_coordinator_disk_name_suffix"></a> [gcp\_coordinator\_disk\_name\_suffix](#input\_gcp\_coordinator\_disk\_name\_suffix) | String to append after instance name (useful for managing legacy deployments) | `string` | `"---boot-disk"` | no |
 | <a name="input_gcp_coordinator_disk_size"></a> [gcp\_coordinator\_disk\_size](#input\_gcp\_coordinator\_disk\_size) | Runner coordinator boot disk size in gigabytes | `number` | `10` | no |
