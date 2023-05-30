@@ -17,6 +17,7 @@
  * * **Service Account Creator** for managing the service account linked with the coordinator instance.
  * * **Service Account User** for assigning the aforementioned service account to the coordinator instance.
  * * **Service Usage Admin** for enabling the necessary APIs.
+ * * (optional) **Storage Admin** for managing GCS buckets for data archiving purposes e.g. storing job logs.
  *
  * Note that there is no explicit module-level parameter for passing the project name.
  * If you don't want Terraform to use the default value, 
