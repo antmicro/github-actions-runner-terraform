@@ -67,6 +67,7 @@ resource "google_project_service" "compute-engine-api" {
 
 resource "google_project_service" "storage-api" {
   service = "storage.googleapis.com"
+  count   = local.log_bucket_count
 }
 
 resource "google_compute_network" "gha-network" {
@@ -350,13 +351,15 @@ resource "google_storage_bucket" "gha-log-bucket" {
 }
 
 resource "google_storage_bucket_iam_member" "gha-coordinator-sa-role-bucket-creator" {
-  bucket = google_storage_bucket.gha-log-bucket
+  bucket = google_storage_bucket.gha-log-bucket[count.index].name
   role   = "roles/storage.objectCreator"
   member = "serviceAccount:${google_service_account.gha-coordinator-sa.email}"
 
   depends_on = [
     google_storage_bucket.gha-log-bucket
   ]
+
+  count = local.log_bucket_count
 }
 
 output "coordinator_sa" {
