@@ -155,3 +155,9 @@ variable "gcp_log_bucket_name" {
   default     = null
   nullable    = true
 }
+
+variable "gcp_build_results_viewer_url" {
+  type        = string
+  description = "Address and port of build-results-viewer"
+  default     = ""
+}
