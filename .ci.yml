@@ -1,0 +1,25 @@
+stages:
+  - validate
+
+image: "debian:bullseye"
+
+check-readme:
+  stage: validate
+  before_script:
+    - apt-get -qqy update > /dev/null 2> /dev/null
+    - apt-get -qqy install wget > /dev/null 2> /dev/null
+  script:
+    - cp README.md README.md.old
+    - ./make_docs.sh
+    - diff README.md README.md.old
+
+tf-validate:
+  stage: validate
+  before_script:
+    - apt -qqy update > /dev/null 2> /dev/null
+    - apt install -qqy --no-install-recommends ca-certificates wget unzip > /dev/null
+    - wget https://releases.hashicorp.com/terraform/1.1.7/terraform_1.1.7_linux_amd64.zip -q -O - | funzip > /usr/bin/terraform
+    - chmod +x /usr/bin/terraform
+  script:
+    - terraform init
+    - terraform validate
