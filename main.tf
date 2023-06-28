@@ -328,6 +328,7 @@ resource "google_compute_instance" "gha-coordinator" {
     BOOT_IMAGE_BUCKET = var.gcp_boot_image_bucket_name != "" ? var.gcp_boot_image_bucket_name : null
     LOG_BUCKET_NAME   = var.gcp_log_bucket_name
     BRV_URL           = var.gcp_build_results_viewer_url != "" ? var.gcp_build_results_viewer_url : null
+    BRV_PUBLIC_URL    = var.gcp_build_results_viewer_public_url != "" ? var.gcp_build_results_viewer_public_url : null
   }
 
   deletion_protection = true

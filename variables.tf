@@ -158,6 +158,12 @@ variable "gcp_log_bucket_name" {
 
 variable "gcp_build_results_viewer_url" {
   type        = string
-  description = "Address and port of build-results-viewer"
+  description = "Address and port of build-results-viewer backend"
+  default     = ""
+}
+
+variable "gcp_build_results_viewer_public_url" {
+  type        = string
+  description = "Address of build-results-viewer front-end"
   default     = ""
 }
