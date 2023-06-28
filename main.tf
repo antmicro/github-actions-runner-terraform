@@ -84,7 +84,7 @@ resource "google_compute_subnetwork" "gha-subnet" {
   name          = count.index > 0 ? "${var.gcp_subnet}-aux-${count.index}" : var.gcp_subnet
   network       = google_compute_network.gha-network.id
   region        = local.regions[count.index]
-  ip_cidr_range = "10.${count.index}.0.0/16"
+  ip_cidr_range = cidrsubnet(var.gcp_vpc_prefix, var.gcp_vpc_newbits, count.index)
 
   stack_type       = var.gcp_vpc_ipv6 == true ? "IPV4_IPV6" : "IPV4_ONLY"
   ipv6_access_type = var.gcp_vpc_ipv6 == true ? "EXTERNAL" : null

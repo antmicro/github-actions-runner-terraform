@@ -137,6 +137,18 @@ variable "gcp_vpc_no_firewall" {
   default     = false
 }
 
+variable "gcp_vpc_prefix" {
+  type        = string
+  description = "Total CIDR range (the `prefix` parameter passed to cidrsubnet)"
+  default     = "10.0.0.0/8"
+}
+
+variable "gcp_vpc_newbits" {
+  type        = number
+  description = "The `newbits` parameter passed to cidrsubnet"
+  default     = 8
+}
+
 variable "gcp_coordinator_boot_image_update" {
   type        = string
   description = "Name of the image to use for updating coordinator boot disk"
