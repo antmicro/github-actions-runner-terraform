@@ -63,6 +63,7 @@ No modules.
 
 | Name | Type |
 |------|------|
+| [google_compute_address.gha-coordinator-static-ip](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_address) | resource |
 | [google_compute_attached_disk.gha-coordinator-logdisk-attached](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_attached_disk) | resource |
 | [google_compute_attached_disk.gha-coordinator-persistentdisk-attached](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_attached_disk) | resource |
 | [google_compute_attached_disk.gha-coordinator-sifimagedisk-attached](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_attached_disk) | resource |
@@ -112,6 +113,7 @@ No modules.
 | <a name="input_gcp_coordinator_name"></a> [gcp\_coordinator\_name](#input\_gcp\_coordinator\_name) | Runner coordinator instance name | `string` | `"gha-runner-coordinator"` | no |
 | <a name="input_gcp_coordinator_persistent_disk_present"></a> [gcp\_coordinator\_persistent\_disk\_present](#input\_gcp\_coordinator\_persistent\_disk\_present) | Specify if a sepearate disk for persistent data should be created and managed (beta) | `bool` | `false` | no |
 | <a name="input_gcp_coordinator_persistent_disk_size"></a> [gcp\_coordinator\_persistent\_disk\_size](#input\_gcp\_coordinator\_persistent\_disk\_size) | Runner coordinator persistent disk size in gigabytes (beta) | `number` | `50` | no |
+| <a name="input_gcp_coordinator_reserve_static_internal_ip"></a> [gcp\_coordinator\_reserve\_static\_internal\_ip](#input\_gcp\_coordinator\_reserve\_static\_internal\_ip) | Reserve a static IP for coordinator within `gcp_subnet` | `bool` | `false` | no |
 | <a name="input_gcp_coordinator_scale"></a> [gcp\_coordinator\_scale](#input\_gcp\_coordinator\_scale) | Number of runners that coordinator should enable (beta) | `number` | `"0"` | no |
 | <a name="input_gcp_coordinator_sif_image_disk_present"></a> [gcp\_coordinator\_sif\_image\_disk\_present](#input\_gcp\_coordinator\_sif\_image\_disk\_present) | Specify if a sepearate disk for image should be attached (beta) | `bool` | `false` | no |
 | <a name="input_gcp_coordinator_sif_image_name"></a> [gcp\_coordinator\_sif\_image\_name](#input\_gcp\_coordinator\_sif\_image\_name) | Name of the image containing sif image of the coordinator (beta) | `string` | `""` | no |
@@ -131,3 +133,4 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_coordinator_sa"></a> [coordinator\_sa](#output\_coordinator\_sa) | The email address of the service account assigned to the coordinator machine |
+| <a name="output_coordinator_static_ip"></a> [coordinator\_static\_ip](#output\_coordinator\_static\_ip) | Static IP address of the coordinator machine (null if ephemeral) |

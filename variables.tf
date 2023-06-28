@@ -179,3 +179,9 @@ variable "gcp_build_results_viewer_public_url" {
   description = "Address of build-results-viewer front-end"
   default     = ""
 }
+
+variable "gcp_coordinator_reserve_static_internal_ip" {
+  type        = bool
+  description = "Reserve a static IP for coordinator within `gcp_subnet`"
+  default     = false
+}

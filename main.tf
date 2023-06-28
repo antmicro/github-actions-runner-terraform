@@ -52,8 +52,20 @@ locals {
   sif_image_disk_count  = var.gcp_coordinator_sif_image_disk_present == true ? 1 : 0
   persistent_disk_count = var.gcp_coordinator_persistent_disk_present == true ? 1 : 0
   fw_count              = var.gcp_vpc_no_firewall == false ? 1 : 0
+  static_ip_count       = var.gcp_coordinator_reserve_static_internal_ip ? 1 : 0
   c_tag                 = "coordinator"
   r_tag                 = "runners"
+
+  // Reserve the second host of the first subnetwork (indexed from zero)
+  // as the first host of a given subnet is used as its default gateway, e.g.:
+  //
+  // > cidrsubnet("10.3.0.0/16", 2, 0)
+  // "10.3.0.0/18"
+  //
+  // > cidrhost(cidrsubnet("10.3.0.0/16", 2, 0), 2)
+  // "10.3.0.2"
+  //
+  coordinator_static_ip = var.gcp_coordinator_reserve_static_internal_ip ? cidrhost(cidrsubnet(var.gcp_vpc_prefix, var.gcp_vpc_newbits, 0), 2) : null
 }
 
 data "google_project" "project" {}
@@ -284,6 +296,15 @@ resource "google_compute_attached_disk" "gha-coordinator-sifimagedisk-attached" 
   count       = local.sif_image_disk_count
 }
 
+resource "google_compute_address" "gha-coordinator-static-ip" {
+  name         = "${var.gcp_coordinator_name}--ip"
+  subnetwork   = google_compute_subnetwork.gha-subnet[0].self_link
+  address_type = "INTERNAL"
+  region       = local.regions[0]
+  address      = local.coordinator_static_ip
+  count        = local.static_ip_count
+}
+
 resource "google_compute_instance" "gha-coordinator" {
   name         = var.gcp_coordinator_name
   zone         = var.gcp_zone
@@ -302,6 +323,7 @@ resource "google_compute_instance" "gha-coordinator" {
 
   network_interface {
     network    = google_compute_network.gha-network.id
+    network_ip = var.gcp_coordinator_reserve_static_internal_ip ? google_compute_address.gha-coordinator-static-ip[0].address : null
     subnetwork = google_compute_subnetwork.gha-subnet[0].id
 
     access_config {}
@@ -368,4 +390,9 @@ resource "google_storage_bucket_iam_member" "gha-coordinator-sa-role-bucket-crea
 output "coordinator_sa" {
   value       = google_service_account.gha-coordinator-sa.email
   description = "The email address of the service account assigned to the coordinator machine"
+}
+
+output "coordinator_static_ip" {
+  value       = local.coordinator_static_ip
+  description = "Static IP address of the coordinator machine (null if ephemeral)"
 }
