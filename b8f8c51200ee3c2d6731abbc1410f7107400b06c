@@ -1,0 +1,12 @@
+{
+    "categories": [
+        "Cloud Systems"
+    ],
+    "tags": [
+        "GCP",
+        "CI",
+        "TERRAFORM",
+        "GITHUB-ACTIONS",
+        "TESTING"
+    ]
+}
