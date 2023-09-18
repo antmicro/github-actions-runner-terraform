@@ -396,3 +396,8 @@ output "coordinator_static_ip" {
   value       = local.coordinator_static_ip
   description = "Static IP address of the coordinator machine (null if ephemeral)"
 }
+
+output "coordinator_vpc_self_link" {
+  value       = google_compute_network.gha-network.self_link
+  description = "Self-link to the VPC network of the deployment"
+}

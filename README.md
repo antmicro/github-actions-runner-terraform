@@ -134,3 +134,4 @@ No modules.
 |------|-------------|
 | <a name="output_coordinator_sa"></a> [coordinator\_sa](#output\_coordinator\_sa) | The email address of the service account assigned to the coordinator machine |
 | <a name="output_coordinator_static_ip"></a> [coordinator\_static\_ip](#output\_coordinator\_static\_ip) | Static IP address of the coordinator machine (null if ephemeral) |
+| <a name="output_coordinator_vpc_self_link"></a> [coordinator\_vpc\_self\_link](#output\_coordinator\_vpc\_self\_link) | Self-link to the VPC network of the deployment |
