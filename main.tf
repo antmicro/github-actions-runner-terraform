@@ -337,7 +337,9 @@ resource "google_compute_instance" "gha-coordinator" {
   lifecycle {
     ignore_changes = [
       attached_disk,
-      metadata["ssh-keys"]
+      metadata["ssh-keys"],
+      metadata["coordinator_pid"],
+      metadata["coordinator_boot_id"]
     ]
   }
 
