@@ -71,16 +71,19 @@ locals {
 data "google_project" "project" {}
 
 resource "google_project_service" "iam-api" {
-  service = "iam.googleapis.com"
+  service            = "iam.googleapis.com"
+  disable_on_destroy = false
 }
 
 resource "google_project_service" "compute-engine-api" {
-  service = "compute.googleapis.com"
+  service            = "compute.googleapis.com"
+  disable_on_destroy = false
 }
 
 resource "google_project_service" "storage-api" {
-  service = "storage.googleapis.com"
-  count   = local.log_bucket_count
+  service            = "storage.googleapis.com"
+  disable_on_destroy = false
+  count              = local.log_bucket_count
 }
 
 resource "google_compute_network" "gha-network" {
