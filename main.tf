@@ -193,9 +193,10 @@ resource "google_compute_router_nat" "gha-nat" {
   name                               = count.index > 0 ? "${var.gcp_subnet}---gateway-${count.index}" : "${var.gcp_subnet}---gateway"
   router                             = google_compute_router.gha-router[count.index].name
   region                             = google_compute_router.gha-router[count.index].region
-  nat_ip_allocate_option             = "AUTO_ONLY"
+  nat_ip_allocate_option             = length(var.gcp_vpc_nat_ips) > 0 ? "MANUAL_ONLY" : "AUTO_ONLY"
   source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
   min_ports_per_vm                   = 512
+  nat_ips                            = length(var.gcp_vpc_nat_ips) > 0 ? var.gcp_vpc_nat_ips[google_compute_router.gha-router[count.index].region] : []
 }
 
 moved {

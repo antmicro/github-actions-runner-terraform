@@ -149,6 +149,12 @@ variable "gcp_vpc_newbits" {
   default     = 8
 }
 
+variable "gcp_vpc_nat_ips" {
+  type        = map(list(string))
+  description = "An optional map of IP addresses for use with NAT per region"
+  default     = {}
+}
+
 variable "gcp_coordinator_boot_image_update" {
   type        = string
   description = "Name of the image to use for updating coordinator boot disk"
