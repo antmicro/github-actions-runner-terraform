@@ -122,6 +122,7 @@ No modules.
 | <a name="input_gcp_service_account"></a> [gcp\_service\_account](#input\_gcp\_service\_account) | Name component of the service account for coordinator | `string` | `"gha-runner-coordinator-sa"` | no |
 | <a name="input_gcp_subnet"></a> [gcp\_subnet](#input\_gcp\_subnet) | Name for VPC network and subnetwork | `string` | `"gha-runner-net"` | no |
 | <a name="input_gcp_vpc_ipv6"></a> [gcp\_vpc\_ipv6](#input\_gcp\_vpc\_ipv6) | Enable external IPv6 access for worker machines | `bool` | `false` | no |
+| <a name="input_gcp_vpc_nat_ips"></a> [gcp\_vpc\_nat\_ips](#input\_gcp\_vpc\_nat\_ips) | An optional map of IP addresses for use with NAT per region | `map(list(string))` | `{}` | no |
 | <a name="input_gcp_vpc_newbits"></a> [gcp\_vpc\_newbits](#input\_gcp\_vpc\_newbits) | The `newbits` parameter passed to cidrsubnet | `number` | `8` | no |
 | <a name="input_gcp_vpc_no_firewall"></a> [gcp\_vpc\_no\_firewall](#input\_gcp\_vpc\_no\_firewall) | Do not create firewall rules in the dedicated VPC network | `bool` | `false` | no |
 | <a name="input_gcp_vpc_prefix"></a> [gcp\_vpc\_prefix](#input\_gcp\_vpc\_prefix) | Total CIDR range (the `prefix` parameter passed to cidrsubnet) | `string` | `"10.0.0.0/8"` | no |
