@@ -1,6 +1,6 @@
 # Terraform module for GitHub Actions custom runner
 
-Copyright (c) 2020-2023 [Antmicro](https://www.antmicro.com)
+Copyright (c) 2020-2025 [Antmicro](https://www.antmicro.com)
 
 The aim of this project is to simplify the deployment of
 [Antmicro's GitHub Actions runner](https://github.com/antmicro/runner)
@@ -53,7 +53,7 @@ For this operation to succeed, the following preconditions must be true:
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | ~> 4.42.1 |
+| <a name="provider_google"></a> [google](#provider\_google) | 4.42.1 |
 
 ## Modules
 
