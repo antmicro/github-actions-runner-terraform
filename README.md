@@ -53,7 +53,7 @@ For this operation to succeed, the following preconditions must be true:
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | 4.42.1 |
+| <a name="provider_google"></a> [google](#provider\_google) | ~> 4.42.1 |
 
 ## Modules
 
