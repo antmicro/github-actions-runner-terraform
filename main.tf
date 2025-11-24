@@ -414,3 +414,8 @@ output "coordinator_vpc_self_link" {
   value       = google_compute_network.gha-network.self_link
   description = "Self-link to the VPC network of the deployment"
 }
+
+output "coordinator_vpc_subnet_self_link" {
+  value       = google_compute_subnetwork.gha-subnet[0].self_link
+  description = "Self-link to the VPC subnetwork of the coordinator"
+}
