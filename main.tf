@@ -366,7 +366,7 @@ resource "google_compute_instance" "gha-coordinator" {
     BRV_PUBLIC_URL    = var.gcp_build_results_viewer_public_url != "" ? var.gcp_build_results_viewer_public_url : null
   }
 
-  deletion_protection = true
+  deletion_protection = var.gcp_coordinator_deletion_protection
 
   depends_on = [
     google_project_service.compute-engine-api

@@ -191,3 +191,9 @@ variable "gcp_coordinator_reserve_static_internal_ip" {
   description = "Reserve a static IP for coordinator within `gcp_subnet`"
   default     = false
 }
+
+variable "gcp_coordinator_deletion_protection" {
+  type        = bool
+  description = "Set deletion protection for a coordinator"
+  default     = true
+}
