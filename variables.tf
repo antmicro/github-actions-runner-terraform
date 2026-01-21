@@ -197,3 +197,9 @@ variable "gcp_coordinator_deletion_protection" {
   description = "Set deletion protection for a coordinator"
   default     = true
 }
+
+variable "gcp_create_router_nat" {
+  type        = bool
+  description = "Create the cloud NAT and gateway resources (set to false for manual management)"
+  default     = true
+}

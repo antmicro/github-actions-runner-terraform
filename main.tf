@@ -172,7 +172,7 @@ resource "google_compute_firewall" "gha-firewall-allow-incoming-ssh" {
 }
 
 resource "google_compute_router" "gha-router" {
-  count   = length(local.regions)
+  count   = var.gcp_create_router_nat ? length(local.regions) : 0
   name    = count.index > 0 ? "${var.gcp_subnet}---cloud-router-${count.index}" : "${var.gcp_subnet}---cloud-router"
   network = google_compute_network.gha-network.id
   region  = local.regions[count.index]
