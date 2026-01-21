@@ -105,11 +105,6 @@ resource "google_compute_subnetwork" "gha-subnet" {
   ipv6_access_type = var.gcp_vpc_ipv6 == true ? "EXTERNAL" : null
 }
 
-moved {
-  from = google_compute_subnetwork.gha-subnet
-  to   = google_compute_subnetwork.gha-subnet[0]
-}
-
 resource "google_compute_firewall" "gha-firewall-allow-unbound" {
   name        = "${var.gcp_subnet}---allow-coordinator-services"
   network     = google_compute_network.gha-network.id
@@ -183,11 +178,6 @@ resource "google_compute_router" "gha-router" {
   region  = local.regions[count.index]
 }
 
-moved {
-  from = google_compute_subnetwork.gha-router
-  to   = google_compute_subnetwork.gha-router[0]
-}
-
 resource "google_compute_router_nat" "gha-nat" {
   count                               = length(google_compute_router.gha-router)
   name                                = count.index > 0 ? "${var.gcp_subnet}---gateway-${count.index}" : "${var.gcp_subnet}---gateway"
@@ -204,11 +194,6 @@ resource "google_compute_router_nat" "gha-nat" {
     enable = true
     filter = "ERRORS_ONLY"
   }
-}
-
-moved {
-  from = google_compute_router_nat.gha-nat
-  to   = google_compute_router_nat.gha-nat[0]
 }
 
 resource "google_service_account" "gha-coordinator-sa" {
